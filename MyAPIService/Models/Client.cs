@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MyAPIService.Models {
 	public class Client {
 
@@ -8,6 +10,9 @@ namespace MyAPIService.Models {
 		public string? Surname { get; set; } = string.Empty;
 
 		public User? User { get; set; } = null;
+
+		[ForeignKey("User")]
+		public int UserId { get; set; }
 
 	}
 }
