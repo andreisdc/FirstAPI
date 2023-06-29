@@ -11,6 +11,6 @@ namespace MyAPIService
 		public DbSet<User> Users => Set<User>();
 		public DbSet<Owner> Owners => Set<Owner>();
 		public DbSet<Client> Clients => Set<Client>();
-		public DbSet<Property> Property => Set<Property>();
+		public DbSet<Property> Properties => Set<Property>();
 	}
 }

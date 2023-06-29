@@ -16,7 +16,15 @@ namespace MyAPIService.Controller {
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<IEnumerable<User>>> Create(User user) {
+		public async Task<ActionResult<IEnumerable<User>>> Create(User user)
+		{
+			var validUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
+
+			if (validUser != null)
+			{
+				return BadRequest("ALREADY IN DATABASE");
+			}
+
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
 
@@ -38,8 +46,25 @@ namespace MyAPIService.Controller {
 			return Ok(user);
 		}
 
+		[HttpGet("login")]
+		public async Task<ActionResult<User>> Get(string username, string password)
+		{
+			var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+			if (user == null) {
+				return BadRequest("User Not Found");
+			}
+			return Ok(user);
+		}
+
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Update(int id, User updatedUser) {
+
+			var validUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == updatedUser.Username);
+
+			if (validUser != null) {
+				return BadRequest("ALREADY IN DATABASE");
+			}
+
 			var user = await _context.Users.FindAsync(id);
 			if (user == null) {
 				return NotFound();

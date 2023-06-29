@@ -7,5 +7,7 @@ namespace MyAPIService.Models {
 		public string? Surname { get; set; } = string.Empty;
 
 		public User? User { get; set; } = null;
+
+		public int UserId { get; set; }
 	}
 }
